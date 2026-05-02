@@ -1,12 +1,11 @@
 # ============================================
 # TP Master IA - Classification
 # Dataset: Breast Cancer Wisconsin
-# Version corrigée - Sans erreurs d'affichage
 # ============================================
 
 
 import matplotlib
-matplotlib.use('Agg')  # Désactive l'affichage interactif
+matplotlib.use('Agg') 
 import matplotlib.pyplot as plt
 
 # Maintenant les imports normaux
@@ -16,7 +15,7 @@ import seaborn as sns
 import warnings
 warnings.filterwarnings('ignore')
 
-# ... (reste du code inchangé)
+
 
 # Scikit-learn imports
 from sklearn.datasets import load_breast_cancer
@@ -121,7 +120,7 @@ print("\n" + "="*60)
 print("3. PRÉTRAITEMENT AVANCÉ")
 print("="*60)
 
-# Split des données (stratified pour garder la distribution des classes)
+# Split des données 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
