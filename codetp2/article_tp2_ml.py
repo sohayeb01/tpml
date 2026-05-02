@@ -52,20 +52,20 @@ data = load_breast_cancer()
 X = pd.DataFrame(data.data, columns=data.feature_names)
 y = pd.Series(data.target, name='target')
 
-print(f"\n📊 Shape du dataset: {X.shape}")
-print(f"📈 Nombre d'échantillons: {X.shape[0]}")
-print(f"🔢 Nombre de features: {X.shape[1]}")
-print(f"🎯 Classes: {data.target_names} (0 = Malin, 1 = Bénin)")
+print(f"\n Shape du dataset: {X.shape}")
+print(f" Nombre d'échantillons: {X.shape[0]}")
+print(f" Nombre de features: {X.shape[1]}")
+print(f" Classes: {data.target_names} (0 = Malin, 1 = Bénin)")
 
 # Statistiques descriptives
-print("\n📊 Statistiques descriptives:")
+print("\nStatistiques descriptives:")
 print(X.describe().round(2))
 
 # Vérification des valeurs manquantes
 print(f"\n❓ Valeurs manquantes: {X.isnull().sum().sum()}")
 
 # Distribution des classes
-print("\n🎯 Distribution des classes:")
+print("\n Distribution des classes:")
 print(f"Classe 0 (Malin): {(y==0).sum()} échantillons ({((y==0).sum()/len(y))*100:.1f}%)")
 print(f"Classe 1 (Bénin): {(y==1).sum()} échantillons ({((y==1).sum()/len(y))*100:.1f}%)")
 
@@ -111,7 +111,7 @@ plt.title('Matrice de Corrélation des Features')
 plt.savefig('eda_correlation_matrix.png', dpi=100, bbox_inches='tight')
 plt.show()
 
-print("✅ Visualisations sauvegardées: 'eda_histograms.png', 'eda_boxplots.png', 'eda_correlation_matrix.png'")
+print(" Visualisations sauvegardées: 'eda_histograms.png', 'eda_boxplots.png', 'eda_correlation_matrix.png'")
 
 # ------------------------------
 # 4. PRÉTRAITEMENT AVANCÉ
@@ -124,8 +124,8 @@ print("="*60)
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
-print(f"📊 Train set: {X_train.shape[0]} samples")
-print(f"📊 Test set: {X_test.shape[0]} samples")
+print(f" Train set: {X_train.shape[0]} samples")
+print(f" Test set: {X_test.shape[0]} samples")
 
 # Standardisation (nécessaire pour KNN, SVM, Logistic Regression)
 scaler = StandardScaler()
@@ -137,7 +137,7 @@ robust_scaler = RobustScaler()
 X_train_robust = robust_scaler.fit_transform(X_train)
 X_test_robust = robust_scaler.transform(X_test)
 
-print("✅ StandardScaler et RobustScaler appliqués (pour comparaison)")
+print(" StandardScaler et RobustScaler appliqués (pour comparaison)")
 
 # ------------------------------
 # 5. DÉFINITION DES MODÈLES ET HYPERPARAMÈTRES
@@ -206,11 +206,11 @@ results = []
 
 for name, model in models.items():
     print(f"\n{'='*50}")
-    print(f"📌 Training: {name}")
+    print(f" Training: {name}")
     print('='*50)
     
     # Optimisation des hyperparamètres avec RandomizedSearchCV (Bonus avancé)
-    print("🔍 Optimisation hyperparamètres (RandomizedSearchCV 5-fold)...")
+    print(" Optimisation hyperparamètres (RandomizedSearchCV 5-fold)...")
     
     random_search = RandomizedSearchCV(
         model, 
@@ -226,8 +226,8 @@ for name, model in models.items():
     random_search.fit(X_train_scaled, y_train)
     best_model = random_search.best_estimator_
     
-    print(f"✅ Meilleurs paramètres: {random_search.best_params_}")
-    print(f"✅ Meilleur score F1 (CV): {random_search.best_score_:.4f}")
+    print(f" Meilleurs paramètres: {random_search.best_params_}")
+    print(f" Meilleur score F1 (CV): {random_search.best_score_:.4f}")
     
     # Prédictions
     y_pred = best_model.predict(X_test_scaled)
@@ -279,7 +279,7 @@ for name, model in models.items():
     plt.savefig(f'confusion_matrix_{name.replace(" ", "_")}.png', dpi=100, bbox_inches='tight')
     plt.show()
     
-    print(f"\n📊 Résultats sur Test Set:")
+    print(f"\n Résultats sur Test Set:")
     print(f"   Accuracy: {accuracy:.4f}")
     print(f"   Precision: {precision:.4f}")
     print(f"   Recall: {recall:.4f}")
@@ -298,12 +298,12 @@ print("="*60)
 
 results_df = pd.DataFrame(results)
 results_df = results_df.round(4)
-print("\n📊 Comparaison des Modèles:")
+print("\n Comparaison des Modèles:")
 print(results_df.to_string(index=False))
 
 # Sauvegarde des résultats
 results_df.to_csv('model_comparison_results.csv', index=False)
-print("\n✅ Résultats sauvegardés: 'model_comparison_results.csv'")
+print("\n Résultats sauvegardés: 'model_comparison_results.csv'")
 
 # ------------------------------
 # 8. COURBES PRECISION-RECALL (Bonus - plus pertinent pour dataset déséquilibré)
@@ -336,7 +336,7 @@ plt.legend(loc='best')
 plt.grid(alpha=0.3)
 plt.savefig('precision_recall_curves.png', dpi=100, bbox_inches='tight')
 plt.show()
-print("✅ PR AUC curves sauvegardées: 'precision_recall_curves.png'")
+print(" PR AUC curves sauvegardées: 'precision_recall_curves.png'")
 
 # ------------------------------
 # 9. COURBES DE CALIBRATION (Bonus)
@@ -366,7 +366,7 @@ plt.legend(loc='best')
 plt.grid(alpha=0.3)
 plt.savefig('calibration_curves.png', dpi=100, bbox_inches='tight')
 plt.show()
-print("✅ Calibration curves sauvegardées: 'calibration_curves.png'")
+print(" Calibration curves sauvegardées: 'calibration_curves.png'")
 
 # ------------------------------
 # 10. LEARNING CURVES (Détection Overfitting/Underfitting)
@@ -406,7 +406,7 @@ for idx, (name, model) in enumerate(models.items()):
 plt.tight_layout()
 plt.savefig('learning_curves.png', dpi=100, bbox_inches='tight')
 plt.show()
-print("✅ Learning curves sauvegardées: 'learning_curves.png'")
+print(" Learning curves sauvegardées: 'learning_curves.png'")
 
 # ------------------------------
 # SHAP VALUES - Version corrigée pour array 3D
@@ -444,7 +444,7 @@ shap.summary_plot(shap_values_class1, X_test_scaled,
 plt.tight_layout()
 plt.savefig('shap_summary_plot.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("✅ SHAP summary plot sauvegardé: 'shap_summary_plot.png'")
+print(" SHAP summary plot sauvegardé: 'shap_summary_plot.png'")
 
 # Bar plot (importance globale)
 plt.figure(figsize=(10, 6))
@@ -454,7 +454,7 @@ shap.summary_plot(shap_values_class1, X_test_scaled,
 plt.tight_layout()
 plt.savefig('shap_bar_plot.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("✅ SHAP bar plot sauvegardé: 'shap_bar_plot.png'")
+print(" SHAP bar plot sauvegardé: 'shap_bar_plot.png'")
 
 # Calcul de l'importance moyenne absolue
 mean_abs_shap = np.abs(shap_values_class1).mean(axis=0)
@@ -463,7 +463,7 @@ feature_importance = pd.DataFrame({
     'importance_shap': mean_abs_shap
 }).sort_values('importance_shap', ascending=False)
 
-print("\n📊 Top 10 des caractéristiques (SHAP):")
+print("\nTop 10 des caractéristiques (SHAP):")
 for i in range(10):
     print(f"   {i+1}. {feature_importance.iloc[i]['caractéristique']}: {feature_importance.iloc[i]['importance_shap']:.4f}")
 
@@ -498,7 +498,7 @@ y_pred_stack = stacking_clf.predict(X_test_scaled)
 y_proba_stack = stacking_clf.predict_proba(X_test_scaled)[:, 1]
 
 # Évaluation
-print("\n📊 Résultats du Stacking Classifier:")
+print("\n Résultats du Stacking Classifier:")
 print(f"   Accuracy: {accuracy_score(y_test, y_pred_stack):.4f}")
 print(f"   F1-Score: {f1_score(y_test, y_pred_stack):.4f}")
 print(f"   ROC AUC: {roc_auc_score(y_test, y_proba_stack):.4f}")
@@ -517,7 +517,7 @@ voting_clf = VotingClassifier(
 voting_clf.fit(X_train_scaled, y_train)
 y_pred_vote = voting_clf.predict(X_test_scaled)
 
-print("\n📊 Résultats du Voting Classifier (Soft):")
+print("\nRésultats du Voting Classifier (Soft):")
 print(f"   Accuracy: {accuracy_score(y_test, y_pred_vote):.4f}")
 print(f"   F1-Score: {f1_score(y_test, y_pred_vote):.4f}")
 
@@ -551,7 +551,7 @@ for name, model in models.items():
     })
 
 scaling_df = pd.DataFrame(comparison_scaling)
-print("\n📊 Impact du StandardScaler sur les performances F1:")
+print("\n Impact du StandardScaler sur les performances F1:")
 print(scaling_df.to_string(index=False))
 
 # ------------------------------
@@ -568,18 +568,6 @@ best_f1 = results_df['F1-Score'].max()
 # Modèle le plus stable (plus petit écart-type CV)
 most_stable = results_df.loc[results_df['CV F1 Std'].idxmin(), 'Modèle']
 
-print(f"\n🏆 MEILLEUR MODÈLE (F1-Score): {best_model_name} (F1 = {best_f1:.4f})")
-print(f"🔒 MODÈLE LE PLUS STABLE: {most_stable} (Std = {results_df['CV F1 Std'].min():.4f})")
+print(f"\n MEILLEUR MODÈLE (F1-Score): {best_model_name} (F1 = {best_f1:.4f})")
+print(f" MODÈLE LE PLUS STABLE: {most_stable} (Std = {results_df['CV F1 Std'].min():.4f})")
 
-print("\n" + "="*60)
-print("✅ TP TERMINÉ AVEC SUCCÈS!")
-print("="*60)
-print("\n📁 Fichiers générés:")
-print("   📊 model_comparison_results.csv - Résultats comparatifs")
-print("   📈 confusion_matrix_*.png - Matrices de confusion")
-print("   📉 precision_recall_curves.png - Courbes PR AUC")
-print("   📊 calibration_curves.png - Courbes de calibration")
-print("   📈 learning_curves.png - Courbes d'apprentissage")
-print("   🎯 shap_summary_plot.png - SHAP summary plot")
-print("   📊 shap_bar_plot.png - SHAP feature importance")
-print("   📁 eda_*.png - Visualisations exploratoires")
