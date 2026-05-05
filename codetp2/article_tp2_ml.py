@@ -62,7 +62,7 @@ print("\nStatistiques descriptives:")
 print(X.describe().round(2))
 
 # Vérification des valeurs manquantes
-print(f"\n❓ Valeurs manquantes: {X.isnull().sum().sum()}")
+print(f"\n Valeurs manquantes: {X.isnull().sum().sum()}")
 
 # Distribution des classes
 print("\n Distribution des classes:")
